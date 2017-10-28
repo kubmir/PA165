@@ -16,6 +16,7 @@ import org.junit.Rule;
 
 import cz.fi.muni.carshop.entities.Car;
 import cz.fi.muni.carshop.enums.CarTypes;
+import cz.fi.muni.carshop.exceptions.RequestedCarNotFoundException;
 import cz.fi.muni.carshop.services.CarShopStorageService;
 import cz.fi.muni.carshop.services.CarShopStorageServiceImpl;
 
@@ -26,6 +27,23 @@ public class CarShopStorageServiceTest {
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
 
+        @Test()
+	public void testSellCarNotInStorage() throws RequestedCarNotFoundException {
+            service.addCarToStorage(new Car(Color.BLACK, CarTypes.BMW, 2014, 5000));
+            thrown.expect(RequestedCarNotFoundException.class);
+            service.sellCar(new Car(Color.BLACK, CarTypes.AUDI, 2016, -1));
+        }
+        
+        @Test()
+	public void testSellCar() throws RequestedCarNotFoundException {
+            Car toSell = new Car(Color.LIGHT_GRAY, CarTypes.AUDI, 2016, 500);
+            service.addCarToStorage(toSell);
+            service.addCarToStorage(new Car(Color.BLACK, CarTypes.BMW, 2014, 5000));
+            
+            service.sellCar(toSell);
+            assertTrue(!service.isCarAvailable(Color.LIGHT_GRAY, CarTypes.AUDI).isPresent());
+        }
+        
 	@Test()
 	public void testPriceCantBeNegative() {
 		// JUnit 4.11

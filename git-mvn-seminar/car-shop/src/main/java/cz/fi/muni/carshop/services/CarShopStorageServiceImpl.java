@@ -40,10 +40,12 @@ public class CarShopStorageServiceImpl implements CarShopStorageService {
         @Override
         public void sellCar(Car car) throws RequestedCarNotFoundException {
             List<Car> tmp = CarShopStorage.getInstancce().getCars().get(car.getType());
-            boolean isInStorage = tmp.contains(car);
-            
-            if(isInStorage) {
-                tmp.remove(car);
+            if(tmp != null) {
+                boolean isInStorage = tmp.contains(car);
+
+                if(isInStorage) {
+                    tmp.remove(car);
+                }
             } else {
                 throw new RequestedCarNotFoundException("Car not found");
             }
