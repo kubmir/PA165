@@ -14,9 +14,11 @@ public class MainAnnotations
 
     public static void main(String[] args)
     {
-        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
-//        applicationContext.scan("cz.muni.fi.pa165");
+        AnnotationConfigApplicationContext applicationContext 
+                                = new AnnotationConfigApplicationContext();
+        applicationContext.scan("cz.muni.fi.pa165");
         applicationContext.refresh();
+
 
         CurrencyConvertor currencyConvertor = applicationContext.getBean(CurrencyConvertor.class);
         BigDecimal converted = currencyConvertor.convert(Currency.getInstance("EUR"), Currency.getInstance("CZK"), BigDecimal.valueOf(1));

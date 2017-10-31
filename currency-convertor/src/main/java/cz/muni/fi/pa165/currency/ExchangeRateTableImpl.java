@@ -1,14 +1,10 @@
 package cz.muni.fi.pa165.currency;
 
-import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 import java.util.Currency;
 
-@Service
 public class ExchangeRateTableImpl implements ExchangeRateTable
 {
-
     public ExchangeRateTableImpl()
     {
     }
@@ -22,5 +18,4 @@ public class ExchangeRateTableImpl implements ExchangeRateTable
 
         return null;
     }
-
 }
